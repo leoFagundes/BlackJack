@@ -1,0 +1,35 @@
+Jogo: Black Jack
+
+API doc:
+https://deckofcardsapi.com/
+
+Figma:
+https://www.figma.com/file/Xsx9zO0C2LkGOOwYO2pjHj/Untitled?type=design&node-id=0-1&mode=design&t=GD16waoiVkwYEah1-0
+
+Lógica e Requisitos:
+
+- Apenas um jogador na mesa e o computador de Dealer 
+
+- Distribuição de Cartas:
+
+    Começar distribuindo duas cartas para o jogador e duas cartas para o computador (uma virada para cima e outra virada para baixo).
+
+- Pontuação:
+
+    Calcular a pontuação do jogador e do computador. No Blackjack, as cartas numéricas valem seu valor nominal, as cartas de figuras (valete, rainha, rei) valem 10, e o Ás pode valer 1 ou 11, dependendo da situação.
+
+- Escolha do Jogador:
+
+    Permitir que o jogador escolha entre "hit" (pedir mais uma carta) ou "stand" (ficar com as cartas atuais).
+
+- Jogada do Computador:
+
+    Implementar a lógica para que o computador tome decisões automaticamente. Normalmente, o dealer deve "hit" enquanto sua pontuação for menor que 17 e "stand" a partir de 17.
+
+- Verificação de Resultado:
+
+    Após as escolhas do jogador e do computador, verificar quem tem a mão mais próxima de 21 sem ultrapassá-la. O vencedor é aquele que estiver mais próximo de 21.
+
+- Reinicialização do Jogo:
+
+    Permitir que o jogador reinicie o jogo para jogar novamente.

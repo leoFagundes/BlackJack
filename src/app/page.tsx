@@ -2,11 +2,10 @@
 
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { Cards } from '../../types/types'
-import { createNewDeck, createPile, drawCards, listGame, reShuffleDeck } from '../../services/services'
+import { Cards } from '../types/types'
+import { createNewDeck, createPile, drawCards, listGame, reShuffleDeck } from '../services/services'
 
 export default function Home() {
-  //api -> https://deckofcardsapi.com/
   const [deckId, setDeckId] = useState('')
   const [drawedCards, setDrawedCards] = useState([])
 
