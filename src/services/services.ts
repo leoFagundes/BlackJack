@@ -4,7 +4,6 @@ import { Cards } from '../types/types';
 export const createNewDeck = async () => {
     try {
         const response = await axios.get('https://deckofcardsapi.com/api/deck/new');
-        console.log('Novo Baralho Criado| ID:', response.data.deck_id)
         return response.data.deck_id;
     } catch (error) {
         throw error;

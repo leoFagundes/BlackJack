@@ -6,6 +6,7 @@ import DrawPile from "@/components/DrawPile";
 import DealerHand from "@/components/DealerHand";
 import PlayerHand from "@/components/PlayerHand";
 import Score from "@/components/Score";
+import { useState } from "react";
 
 const TopSideSection = styled.section`
   display: flex;
@@ -24,12 +25,14 @@ const BottomSideSection = styled.section`
 `;
 
 export default function Home() {
+  const [deckID, setDeckID] = useState('')
+
   return (
     <main>
       <TopSideSection>
         <DiscardPile />
         <DealerHand />
-        <DrawPile />
+        <DrawPile deckID={deckID} setDeckID={setDeckID} />
       </TopSideSection>
       <BottomSideSection>
         <div></div>
