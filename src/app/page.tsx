@@ -1,15 +1,11 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { Cards } from '../types/types'
-import { createNewDeck, createPile, drawCards, listGame, reShuffleDeck } from '../services/services'
-import { LabelContainer } from '@/components/styledComponents/LabelStyled'
-import { CardImage } from '@/components/styledComponents/CardStyled'
-import { styled } from 'styled-components'
-import DiscardPile from '@/components/DiscardPile'
-import DrawPile from '@/components/DrawPile'
-import DealerHand from '@/components/Dealer\'sHand'
-
+import { styled } from "styled-components";
+import DiscardPile from "@/components/DiscardPile";
+import DrawPile from "@/components/DrawPile";
+import DealerHand from "@/components/DealerHand";
+import PlayerHand from "@/components/PlayerHand";
+import Score from "@/components/Score";
 
 const TopSideSection = styled.section`
   display: flex;
@@ -17,7 +13,7 @@ const TopSideSection = styled.section`
   align-items: center;
   height: 40vh;
   background-color: #4caf792b;
-`
+`;
 
 const BottomSideSection = styled.section`
   display: flex;
@@ -25,12 +21,9 @@ const BottomSideSection = styled.section`
   align-items: center;
   height: 40vh;
   background-color: #00ffff2b;
-`
+`;
 
 export default function Home() {
-  const [deckId, setDeckId] = useState('')
-  const [drawedCards, setDrawedCards] = useState([])
-
   return (
     <main>
       <TopSideSection>
@@ -39,10 +32,10 @@ export default function Home() {
         <DrawPile />
       </TopSideSection>
       <BottomSideSection>
-      <DiscardPile />
-        <DealerHand />
-        <DrawPile />
+        <div></div>
+        <PlayerHand />
+        <Score />
       </BottomSideSection>
     </main>
-  )
+  );
 }
