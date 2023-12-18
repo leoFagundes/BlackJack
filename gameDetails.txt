@@ -33,3 +33,22 @@ Lógica e Requisitos:
 - Reinicialização do Jogo:
 
     Permitir que o jogador reinicie o jogo para jogar novamente.
+
+
+Exemplo de uso:
+
+<div onClick={async () => {
+const newDeckId = await createNewDeck();
+setDeckId(newDeckId);
+}}>Create Deck</div>
+
+<div onClick={() => reShuffleDeck(deckId)}>Embaralhar</div>
+
+<div onClick={async () => {
+const newCards = await drawCards(deckId, '3');
+setDrawedCards(newCards)
+}}>Draw 3 cards</div>
+
+<div onClick={() => createPile(deckId, 'Leo', drawedCards)}>Create PIle</div>
+
+<div onClick={() => listGame(deckId)}>List ALl</div> 

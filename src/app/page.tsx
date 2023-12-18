@@ -1,32 +1,48 @@
 'use client'
 
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Cards } from '../types/types'
 import { createNewDeck, createPile, drawCards, listGame, reShuffleDeck } from '../services/services'
+import { LabelContainer } from '@/components/styledComponents/LabelStyled'
+import { CardImage } from '@/components/styledComponents/CardStyled'
+import { styled } from 'styled-components'
+import DiscardPile from '@/components/DiscardPile'
+import DrawPile from '@/components/DrawPile'
+import DealerHand from '@/components/Dealer\'sHand'
+
+
+const TopSideSection = styled.section`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 40vh;
+  background-color: #4caf792b;
+`
+
+const BottomSideSection = styled.section`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 40vh;
+  background-color: #00ffff2b;
+`
 
 export default function Home() {
   const [deckId, setDeckId] = useState('')
   const [drawedCards, setDrawedCards] = useState([])
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Hello, World!
-      <div onClick={async () => {
-        const newDeckId = await createNewDeck();
-        setDeckId(newDeckId);
-      }}>Create Deck</div>
-
-      <div onClick={() => reShuffleDeck(deckId)}>Embaralhar</div>
-
-      <div onClick={async () => {
-        const newCards = await drawCards(deckId, '3');
-        setDrawedCards(newCards)
-      }}>Draw 3 cards</div>
-
-      <div onClick={() => createPile(deckId, 'Leo', drawedCards)}>Create PIle</div>
-      
-      <div onClick={() => listGame(deckId)}>List ALl</div>
+    <main>
+      <TopSideSection>
+        <DiscardPile />
+        <DealerHand />
+        <DrawPile />
+      </TopSideSection>
+      <BottomSideSection>
+      <DiscardPile />
+        <DealerHand />
+        <DrawPile />
+      </BottomSideSection>
     </main>
   )
 }
