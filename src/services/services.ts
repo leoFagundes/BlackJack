@@ -41,10 +41,11 @@ export const createPile = async (deckId: string, pileName: string, cards: Cards[
     }
 }
 
-export const listGame = async (deckId: string) => {
+export const listGame = async (deckId: string, pileName: string) => {
     try {
-        const response = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/pile/Leo/list`)
+        const response = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/pile/${pileName}/list`)
         console.log(`List Game Response:`, response)
+        return response.data.piles[pileName].cards
     } catch (error) {
         console.log(error)
     }

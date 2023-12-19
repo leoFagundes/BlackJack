@@ -6,7 +6,8 @@ import DrawPile from "@/components/DrawPile";
 import DealerHand from "@/components/DealerHand";
 import PlayerHand from "@/components/PlayerHand";
 import Score from "@/components/Score";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Cards } from "@/types/types";
 
 const TopSideSection = styled.section`
   display: flex;
@@ -15,6 +16,16 @@ const TopSideSection = styled.section`
   height: 40vh;
   background-color: #4caf792b;
 `;
+
+const MidSideSection = styled.section`
+  display: flex;
+  justify-content: center;
+
+  & > div {
+    display: flex;
+    gap: 10px;
+  }
+`
 
 const BottomSideSection = styled.section`
   display: flex;
@@ -26,17 +37,35 @@ const BottomSideSection = styled.section`
 
 export default function Home() {
   const [deckID, setDeckID] = useState('')
+  const [drawnCards, setDrawnCards] = useState<string[]>([])
+  const [playerHand, setPlayerHand] = useState<Cards[]>([])
 
   return (
     <main>
       <TopSideSection>
         <DiscardPile />
         <DealerHand />
-        <DrawPile deckID={deckID} setDeckID={setDeckID} />
+        <DrawPile
+          deckID={deckID}
+          setDeckID={setDeckID}
+
+          setDrawnCards={setDrawnCards}
+
+          setPlayerHand={setPlayerHand}
+        />
       </TopSideSection>
+      <MidSideSection>
+        {deckID != '' ? (
+          <div>
+            <button>teste</button>
+            <button>teste</button>
+            <button>teste</button>
+          </div>
+        ) : ('Crie um baralho')}
+      </MidSideSection>
       <BottomSideSection>
         <div></div>
-        <PlayerHand />
+        <PlayerHand playerHand={playerHand} />
         <Score />
       </BottomSideSection>
     </main>

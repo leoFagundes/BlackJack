@@ -20,7 +20,10 @@ Lógica e Requisitos:
 
 - Escolha do Jogador:
 
-    Permitir que o jogador escolha entre "hit" (pedir mais uma carta) ou "stand" (ficar com as cartas atuais).
+    Permitir que o jogador escolha entre 
+    "hit" (pedir mais uma carta)
+    "stand" (ficar com as cartas atuais)
+    "split" (dividir as cartas e fazer dois jogos)
 
 - Jogada do Computador:
 

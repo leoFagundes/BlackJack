@@ -1,5 +1,19 @@
 import React from "react";
+import { CardImage } from "../styledComponents/CardStyled";
+import { Cards } from "@/types/types";
 
-export default function PlayerHand() {
-  return <div>PlayerHand</div>;
+interface Props {
+  playerHand: Cards[]
+}
+
+export default function PlayerHand({ playerHand }: Props) {
+  return (
+    <>
+      {playerHand.map((props, index) => (
+        <div key={index}>
+          <CardImage src={props.image} />
+        </div>
+      ))}
+    </>
+  )
 }
