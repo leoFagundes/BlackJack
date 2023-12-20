@@ -59,10 +59,10 @@ export default function DrawPile({
       setDrawnCards(cards);
       console.log("Cartas compradas para o dealer: ", cards);
 
-      // Cria a mão do jogador
+      // Cria a mão do dealer
       await createPile(id, "dealerHand", cards);
 
-      // popula a mão do jogador com as cartas compradas
+      // popula a mão do dealer com as cartas compradas
       const dealerCards = await listGame(id, "dealerHand");
       console.log("DEALERHAND: ", dealerCards);
       setDealerHand(dealerCards);
@@ -76,7 +76,6 @@ export default function DrawPile({
     const fetchSuffle = async () => {
       try {
         const response = await reShuffleDeck(deckID);
-        console.log("Embaralhando deck", response);
         setDeckCount(response.remaining);
       } catch (error) {
         console.warn("Não foi possível embaralhar o deck");
@@ -90,8 +89,24 @@ export default function DrawPile({
     <>
       {deckID != "" ? (
         <DeckDiv>
-          <LabelContainer>Cartas restantes: {deckCount}</LabelContainer>
-          <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+          {deckCount == 1 ? (
+            <>
+              <LabelContainer>Cartas restantes: {deckCount}</LabelContainer>
+              <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+            </>
+          ) : deckCount == 0 ? (
+            "Sem cartas"
+          ) : (
+            <>
+              <LabelContainer>Cartas restantes: {deckCount}</LabelContainer>
+              <section>
+                <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+                <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+                <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+                <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+              </section>
+            </>
+          )}
         </DeckDiv>
       ) : (
         <Button onClick={() => fetchNewDeck()}>Criar Baralho</Button>
@@ -105,4 +120,19 @@ const DeckDiv = styled.div`
   flex-direction: column;
   position: relative;
   gap: 15px;
+
+  section {
+    display: flex;
+    width: 138.19px;
+
+    img:nth-child(2) {
+      transform: translateX(-135px);
+    }
+    img:nth-child(3) {
+      transform: translateX(-270px);
+    }
+    img:nth-child(4) {
+      transform: translateX(-405px);
+    }
+  }
 `;

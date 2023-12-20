@@ -15,7 +15,7 @@ export const reShuffleDeck = async (deckId: string) => {
     const response = await axios.get(
       `https://deckofcardsapi.com/api/deck/${deckId}/shuffle/?remaining=true`,
     );
-    console.log("Baralho Embaralhado");
+    console.log("Embaralhando Deck");
     return response.data;
   } catch (error) {
     throw error;
@@ -27,7 +27,7 @@ export const drawCards = async (deckId: string, count: string) => {
     const response = await axios.get(
       `https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=${count}`,
     );
-    console.log(`${count} cartas compradas:`, response.data);
+    console.log(`${count} carta(s) comprada(s):`, response.data);
     return response.data.cards;
   } catch (error) {
     throw error;
@@ -41,12 +41,10 @@ export const createPile = async (
 ) => {
   const cardsToAddList: string[] = cards.map((card) => card.code);
   const cardsToAdd: string = cardsToAddList.join(",");
-  console.log("CARDS TO ADD:", cardsToAdd);
   try {
     const response = await axios.get(
       `https://deckofcardsapi.com/api/deck/${deckId}/pile/${pileName}/add/?cards=${cardsToAdd}`,
     );
-    console.log(`Pile Response:`, response);
   } catch (error) {
     console.log(error);
   }
@@ -57,7 +55,6 @@ export const listGame = async (deckId: string, pileName: string) => {
     const response = await axios.get(
       `https://deckofcardsapi.com/api/deck/${deckId}/pile/${pileName}/list`,
     );
-    console.log(`List Game Response:`, response);
     return response.data.piles[pileName].cards;
   } catch (error) {
     console.log(error);
