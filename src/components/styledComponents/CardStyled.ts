@@ -4,6 +4,7 @@ export const CardImage = styled.img<{
   width?: string;
   height?: string;
   cursor?: string;
+  boxshadow?: string;
 }>`
   width: ${(props) => props.width || "auto"};
   height: ${(props) => props.height || "192px"};

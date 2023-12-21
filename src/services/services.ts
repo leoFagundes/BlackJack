@@ -10,6 +10,35 @@ export const createNewDeck = async () => {
   }
 };
 
+export const deckState = async (deckId: string) => {
+  try {
+    const response = await axios.get(
+      `https://deckofcardsapi.com/api/deck/${deckId}`,
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deckReturn = async (
+  deckId: string,
+  pileName1: string,
+  pileName2: string,
+) => {
+  try {
+    await axios.get(
+      `https://deckofcardsapi.com/api/deck/${deckId}/pile/${pileName1}/return/`,
+    );
+
+    await axios.get(
+      `https://deckofcardsapi.com/api/deck/${deckId}/pile/${pileName2}/return/`,
+    );
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const reShuffleDeck = async (deckId: string) => {
   try {
     const response = await axios.get(

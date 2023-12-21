@@ -6,6 +6,7 @@ import {
   drawCards,
   createPile,
   listGame,
+  deckState,
 } from "@/services/services";
 import React, { SetStateAction, useEffect, useState } from "react";
 import { CardImage } from "../styledComponents/CardStyled";
@@ -73,16 +74,18 @@ export default function DrawPile({
   };
 
   useEffect(() => {
-    const fetchSuffle = async () => {
+    const fetchState = async () => {
       try {
-        const response = await reShuffleDeck(deckID);
+        const response = await deckState(deckID);
         setDeckCount(response.remaining);
       } catch (error) {
         console.warn("Não foi possível embaralhar o deck");
       }
     };
 
-    fetchSuffle();
+    if (deckID != "") {
+      fetchState();
+    }
   });
 
   return (

@@ -11,7 +11,7 @@ interface Props {
 
 interface StyledDivProps {
   index: number;
-  totalItems: number;
+  totalitems: number;
 }
 
 const DealerHandContainer = styled.div`
@@ -30,9 +30,11 @@ export default function DealerHand({ dealerHand, dealerValue }: Props) {
     <DealerHandContainer>
       {dealerHand && dealerHand.length > 0 ? (
         <>
-          <SomaLabel>Soma do Dealer: {dealerValue}</SomaLabel>
+          <SomaLabel color={dealerValue > 21 ? "#cf1212" : "#fff"}>
+            Soma do Dealer: {dealerValue}
+          </SomaLabel>
           {dealerHand.map((props, index) => (
-            <StyledDiv key={index} index={index} totalItems={dealerHand.length}>
+            <StyledDiv key={index} index={index} totalitems={dealerHand.length}>
               <CardImage src={props.image} />
             </StyledDiv>
           ))}
@@ -40,8 +42,8 @@ export default function DealerHand({ dealerHand, dealerValue }: Props) {
       ) : (
         "Dealer Hand"
       )}
-      {dealerHand.length === 1 && (
-        <StyledDiv index={1} totalItems={2}>
+      {dealerHand && dealerHand.length == 1 && (
+        <StyledDiv index={1} totalitems={2}>
           <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
         </StyledDiv>
       )}

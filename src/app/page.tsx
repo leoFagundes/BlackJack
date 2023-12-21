@@ -118,30 +118,6 @@ export default function Home() {
       return total + parseInt(cardValue, 10);
     }, 0);
 
-    // Verifica se a soma ultrapassou 21 e se há um Ás na mão
-    if (sum > 21) {
-      const aceIndices = dealerHand.reduce(
-        (indices: number[], card, index: number) => {
-          if (card.value === "ACE") {
-            indices.push(index);
-          }
-          return indices;
-        },
-        [],
-      );
-
-      // Para cada Ás na mão, ajusta o valor do Ás para 1, se necessário
-      aceIndices.forEach((aceIndex) => {
-        dealerHand[aceIndex].value = "ACE";
-        sum -= 10; // Subtrai 10 da soma (troca o valor do Ás de 11 para 1)
-
-        // Se a soma ficar abaixo de 21, sai do loop para manter o próximo Ás com valor 11
-        if (sum <= 21) {
-          return;
-        }
-      });
-    }
-
     // Atualiza o state com a soma dos valores
     setDealerValue(sum);
 
@@ -168,8 +144,14 @@ export default function Home() {
         {deckID != "" ? (
           <PlayerButtonsLogic
             deckID={deckID}
+            playerValue={playerValue}
+            dealerValue={dealerValue}
+            dealerHand={dealerHand}
             setDrawnCards={setDrawnCards}
             setPlayerHand={setPlayerHand}
+            setDealerHand={setDealerHand}
+            setDealerValue={setDealerValue}
+            setPlayerValue={setPlayerValue}
           />
         ) : (
           "Crie um baralho"
