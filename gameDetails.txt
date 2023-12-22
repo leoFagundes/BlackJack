@@ -18,6 +18,11 @@ Lógica e Requisitos:
 
     Calcular a pontuação do jogador e do computador. No Blackjack, as cartas numéricas valem seu valor nominal, as cartas de figuras (valete, rainha, rei) valem 10, e o Ás pode valer 1 ou 11, dependendo da situação.
 
+    Quando o jogador decide "stand", a pontuação é comparada entre o jogador e o dealer:
+        - A pontuação da partida é a diferença de pontos de quem ganhou referente a quem perdeu
+        - Caso um jogador ou o dealer passe de 21 pontos ele perderá a quantidade de pontos até chegar em 21 e uma nova rodada vai Começar
+        - Em caso de empate, nenhum ponto é ganho ou perdido
+
 - Escolha do Jogador:
 
     Permitir que o jogador escolha entre 

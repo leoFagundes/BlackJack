@@ -44,6 +44,8 @@ export default function Home() {
   const [dealerHand, setDealerHand] = useState<Cards[]>([]);
   const [playerValue, setPlayerValue] = useState<number>(0);
   const [dealerValue, setDealerValue] = useState<number>(0);
+  const [playerScore, setPlayerScore] = useState<number>(0);
+  const [dealerScore, setDealerScore] = useState<number>(0);
 
   useEffect(() => {
     // Mapeia os valores das cartas considerando KING, QUEEN, etc. como 10
