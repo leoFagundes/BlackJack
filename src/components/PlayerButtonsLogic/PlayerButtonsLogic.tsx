@@ -8,6 +8,8 @@ import {
   reShuffleDeck,
 } from "@/services/services";
 import { Cards } from "@/types/types";
+import DealerHand from "../DealerHand";
+import { styled } from "styled-components";
 
 interface Props {
   deckID: string;
@@ -19,6 +21,10 @@ interface Props {
   setDealerHand: React.Dispatch<SetStateAction<Cards[]>>;
   setDealerValue: React.Dispatch<SetStateAction<number>>;
   setPlayerValue: React.Dispatch<SetStateAction<number>>;
+  setPlayerScore: React.Dispatch<SetStateAction<number>>;
+  setDealerScore: React.Dispatch<SetStateAction<number>>;
+  playerScore: number;
+  dealerScore: number;
 }
 
 export default function PlayerButtonsLogic({
@@ -31,8 +37,13 @@ export default function PlayerButtonsLogic({
   setDealerHand,
   setDealerValue,
   setPlayerValue,
+  setPlayerScore,
+  setDealerScore,
+  playerScore,
+  dealerScore,
 }: Props) {
   const [hitButtonDisabled, setHitButtonDisabled] = useState(false);
+  const [HandleNewGame, setHandleNewGame] = useState(false);
 
   async function hitLogic() {
     console.log("Hit");
@@ -52,8 +63,10 @@ export default function PlayerButtonsLogic({
 
   async function standLogic() {
     setHitButtonDisabled(true);
+    let verify = false;
 
     while (dealerValue < 17) {
+      verify = false;
       console.log("Stand", dealerValue);
 
       let cards = await drawCards(deckID, "1");
@@ -77,22 +90,54 @@ export default function PlayerButtonsLogic({
         return total + parseInt(cardValue, 10);
       }, 0);
 
-      // Ajuste para As
+      // Verifica se a soma ultrapassou 21 e se há um Ás na mão
       if (sum > 21) {
-        const aceIndex = dealerCards.findIndex(
-          (card: any) => card.value === "ACE",
+        const aceIndices = dealerHand.reduce(
+          (indices: number[], card, index: number) => {
+            if (card.value === "ACE") {
+              indices.push(index);
+            }
+            return indices;
+          },
+          [],
         );
-        if (aceIndex !== -1) {
-          dealerCards[aceIndex].value = "1";
-          sum -= 10;
-        }
-      }
 
+        // Para cada Ás na mão, ajusta o valor do Ás para 1, se necessário
+        aceIndices.forEach((aceIndex) => {
+          dealerHand[aceIndex].value = "ACE";
+          if (sum > 21) {
+            sum -= 10; // Subtrai 10 da soma (troca o valor do Ás de 11 para 1)
+          }
+        });
+      }
+      // Atualiza o state com a soma dos valores
       setDealerValue(sum);
 
+      // Verifica se a soma ultrapassou 21 após o ajuste do Ás
+      if (sum > 21) {
+        console.log("Estourou! O dealer perdeu.");
+        const newScore = 21 - sum;
+        setDealerScore(dealerScore + newScore);
+        break;
+      }
+
       // Sai do loop se o dealerValue for maior ou igual a 17
+      // Hora de comparar a pontuação das duas mãos
       if (sum >= 17) {
         console.log("DEALER PAROU");
+        if (sum <= 21) {
+          if (sum > playerValue) {
+            const newScore = sum - playerValue;
+            setDealerScore(dealerScore + newScore);
+          } else if (playerValue > sum) {
+            const newScore = playerValue - sum;
+            setPlayerScore(playerScore + newScore);
+          } else if (sum == playerValue) {
+            ("");
+          }
+        }
+
+        setHandleNewGame(true);
         break;
       }
     }
@@ -137,33 +182,53 @@ export default function PlayerButtonsLogic({
       setDealerHand(dealerCards);
     }
 
+    setHandleNewGame(false);
     fetchNewGame();
   }
 
   return (
     <div>
       {playerValue > 21 ? (
-        <>
-          VOCÊ PERDEU
+        <MidContainer>
+          Você perdeu {playerValue - 21} pontos
           <Button
             onClick={() => {
               newGame();
             }}
           >
-            Nova Partida
+            Nova Rodada
           </Button>
-        </>
+        </MidContainer>
       ) : dealerValue > 21 ? (
-        <>
-          DEALER PERDEU
+        <MidContainer>
+          Dealer perdeu {dealerValue - 21} pontos
           <Button
             onClick={() => {
               newGame();
             }}
           >
-            Nova Partida
+            Nova Rodada
           </Button>
-        </>
+        </MidContainer>
+      ) : HandleNewGame ? (
+        <MidContainer>
+          {dealerValue > playerValue
+            ? `Dealer venceu com uma diferença de ${
+                dealerValue - playerValue
+              } pontos`
+            : playerValue > dealerValue
+              ? `Você venceu com uma diferença de ${
+                  playerValue - dealerValue
+                } pontos`
+              : "Empate"}
+          <Button
+            onClick={() => {
+              newGame();
+            }}
+          >
+            Nova Rodada
+          </Button>
+        </MidContainer>
       ) : (
         <>
           <Button
@@ -201,3 +266,12 @@ export default function PlayerButtonsLogic({
     </div>
   );
 }
+
+const MidContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap: 10px;
+`;

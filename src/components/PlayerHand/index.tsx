@@ -3,6 +3,7 @@ import { CardImage } from "../styledComponents/CardStyled";
 import { Cards } from "@/types/types";
 import styled from "styled-components";
 import { SomaLabel } from "../styledComponents/SomaLabelStyled";
+import { LabelContainer } from "../styledComponents/LabelStyled";
 
 interface Props {
   playerHand: Cards[];
@@ -34,16 +35,20 @@ export default function PlayerHand({ playerHand, playerValue }: Props) {
       {playerHand && playerHand.length > 0 ? (
         <>
           <SomaLabel color={playerValue > 21 ? "#cf1212" : "#fff"}>
-            Soma do Jogador: {playerValue}
+            Soma: {playerValue}
           </SomaLabel>
           {playerHand.map((props, index) => (
             <StyledDiv key={index} index={index} totalitems={playerHand.length}>
               <CardImage src={props.image} />
             </StyledDiv>
           ))}
+          <LabelContainer>Mão do Jogador</LabelContainer>
         </>
       ) : (
-        "Player Hand"
+        <>
+          <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+          <LabelContainer>Mão do Jogador</LabelContainer>
+        </>
       )}
     </PlayerHandContainer>
   );

@@ -20,7 +20,7 @@ Lógica e Requisitos:
 
     Quando o jogador decide "stand", a pontuação é comparada entre o jogador e o dealer:
         - A pontuação da partida é a diferença de pontos de quem ganhou referente a quem perdeu
-        - Caso um jogador ou o dealer passe de 21 pontos ele perderá a quantidade de pontos até chegar em 21 e uma nova rodada vai Começar
+        - Caso um jogador ou o dealer passe de 21 pontos ele perderá a quantidade sobressalente de pontos e uma nova rodada vai começar
         - Em caso de empate, nenhum ponto é ganho ou perdido
 
 - Escolha do Jogador:

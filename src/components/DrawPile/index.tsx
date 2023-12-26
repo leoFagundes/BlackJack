@@ -98,10 +98,15 @@ export default function DrawPile({
               <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
             </>
           ) : deckCount == 0 ? (
-            "Sem cartas"
+            <CardImage
+              width="138.19px"
+              style={{ border: "1px solid white" }}
+            ></CardImage>
           ) : (
             <>
-              <LabelContainer>Cartas restantes: {deckCount}</LabelContainer>
+              <LabelContainer width="131px">
+                Cartas restantes: {deckCount}
+              </LabelContainer>
               <section>
                 <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
                 <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
