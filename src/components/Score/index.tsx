@@ -40,10 +40,10 @@ export default function Score({ playerScore, dealerScore }: Props) {
     <ScoreContainer>
       <h4>Pontuação</h4>
       <div>
-        <div>
+        <div title={`O Jogador tem ${playerScore} pontos`}>
           <p>Jogador:</p> <p>{playerScore}</p>
         </div>
-        <div>
+        <div title={`A casa tem ${dealerScore} pontos`}>
           <p>Casa:</p> <p>{dealerScore}</p>
         </div>
       </div>

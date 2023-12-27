@@ -100,11 +100,14 @@ export default function DrawPile({
           ) : deckCount == 0 ? (
             <CardImage
               width="138.19px"
-              style={{ border: "1px solid white" }}
+              style={{
+                border: "1px solid white",
+                backgroundColor: "rgba(255, 255, 255, 0.3)",
+              }}
             ></CardImage>
           ) : (
             <>
-              <LabelContainer width="131px">
+              <LabelContainer width="151px">
                 Cartas restantes: {deckCount}
               </LabelContainer>
               <section>

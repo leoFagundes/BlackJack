@@ -5,8 +5,9 @@ export const LabelContainer = styled.div<{
   height?: string;
   margin?: string;
   cursor?: string;
+  transform?: string;
 }>`
-  width: ${(props) => props.width || "114px"};
+  width: ${(props) => props.width || "134px"};
   height: ${(props) => props.height || "auto"};
   margin: ${(props) => props.margin || "0"};
   background-color: rgba(73, 173, 73, 0.3);
@@ -19,7 +20,7 @@ export const LabelContainer = styled.div<{
   font-weight: bold;
   letter-spacing: 1.5px;
   position: absolute;
-  transform: translateY(200px);
+  transform: translateY(${(props) => props.transform || "200px"});
 
   &:hover {
     cursor: ${(props) => props.cursor || "default"};

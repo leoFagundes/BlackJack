@@ -25,6 +25,8 @@ interface Props {
   setDealerScore: React.Dispatch<SetStateAction<number>>;
   playerScore: number;
   dealerScore: number;
+  isDouble: boolean;
+  setIsDouble: React.Dispatch<SetStateAction<boolean>>;
 }
 
 export default function PlayerButtonsLogic({
@@ -41,8 +43,12 @@ export default function PlayerButtonsLogic({
   setDealerScore,
   playerScore,
   dealerScore,
+  isDouble,
+  setIsDouble,
 }: Props) {
   const [hitButtonDisabled, setHitButtonDisabled] = useState(false);
+  const [standButtonDisabled, setStandButtonDisabled] = useState(false);
+  const [doubleButtonDisabled, setDoubleButtonDisabled] = useState(false);
   const [HandleNewGame, setHandleNewGame] = useState(false);
 
   async function hitLogic() {
@@ -63,6 +69,8 @@ export default function PlayerButtonsLogic({
 
   async function standLogic() {
     setHitButtonDisabled(true);
+    setStandButtonDisabled(true);
+    setDoubleButtonDisabled(true);
     let verify = false;
 
     while (dealerValue < 17) {
@@ -117,7 +125,11 @@ export default function PlayerButtonsLogic({
       if (sum > 21) {
         console.log("Estourou! O dealer perdeu.");
         const newScore = 21 - sum;
-        setDealerScore(dealerScore + newScore);
+        if (isDouble) {
+          setDealerScore(dealerScore + newScore * 2);
+        } else {
+          setDealerScore(dealerScore + newScore);
+        }
         break;
       }
 
@@ -128,10 +140,18 @@ export default function PlayerButtonsLogic({
         if (sum <= 21) {
           if (sum > playerValue) {
             const newScore = sum - playerValue;
-            setDealerScore(dealerScore + newScore);
+            if (isDouble) {
+              setDealerScore(dealerScore + newScore * 2);
+            } else {
+              setDealerScore(dealerScore + newScore);
+            }
           } else if (playerValue > sum) {
             const newScore = playerValue - sum;
-            setPlayerScore(playerScore + newScore);
+            if (isDouble) {
+              setPlayerScore(playerScore + newScore * 2);
+            } else {
+              setPlayerScore(playerScore + newScore);
+            }
           } else if (sum == playerValue) {
             ("");
           }
@@ -143,13 +163,33 @@ export default function PlayerButtonsLogic({
     }
   }
 
-  function splitLogic() {}
+  async function doubleDownLogic() {
+    setHitButtonDisabled(true);
+    setDoubleButtonDisabled(true);
+    setIsDouble(true);
+
+    // Compra X cartas para o player
+    let cards = await drawCards(deckID, "1");
+    setDrawnCards(cards);
+    console.log("Cartas compradas para o jogador: ", cards);
+
+    // Cria a mão do jogador
+    await createPile(deckID, "playerHand", cards);
+
+    // popula a mão do jogador com as cartas compradas
+    const playerCards = await listGame(deckID, "playerHand");
+    console.log("PLAYERCARDS: ", playerCards);
+    setPlayerHand(playerCards);
+  }
 
   async function newGame() {
     await deckReturn(deckID, "playerHand", "dealerHand");
     setDealerHand([]);
     setPlayerHand([]);
     setHitButtonDisabled(false);
+    setStandButtonDisabled(false);
+    setDoubleButtonDisabled(false);
+    setIsDouble(false);
 
     async function fetchNewGame() {
       // Embaralha o deck
@@ -190,7 +230,11 @@ export default function PlayerButtonsLogic({
     <div>
       {playerValue > 21 ? (
         <MidContainer>
-          Você perdeu {playerValue - 21} pontos
+          Você perdeu{" "}
+          {isDouble
+            ? (playerValue - 21) * 2 + ` (${playerValue - 21} x 2)`
+            : playerValue - 21}{" "}
+          pontos
           <Button
             onClick={() => {
               newGame();
@@ -201,7 +245,11 @@ export default function PlayerButtonsLogic({
         </MidContainer>
       ) : dealerValue > 21 ? (
         <MidContainer>
-          Dealer perdeu {dealerValue - 21} pontos
+          Dealer perdeu{" "}
+          {isDouble
+            ? (dealerValue - 21) * 2 + ` (${dealerValue - 21} x 2)`
+            : dealerValue - 21}{" "}
+          pontos
           <Button
             onClick={() => {
               newGame();
@@ -215,11 +263,23 @@ export default function PlayerButtonsLogic({
           {dealerValue > playerValue
             ? `Dealer venceu com uma diferença de ${
                 dealerValue - playerValue
-              } pontos`
+              }, ${
+                isDouble
+                  ? `ganhando ${(dealerValue - playerValue) * 2} pontos (${
+                      dealerValue - playerValue
+                    } x 2)`
+                  : `ganhando ${dealerValue - playerValue} pontos`
+              }`
             : playerValue > dealerValue
               ? `Você venceu com uma diferença de ${
                   playerValue - dealerValue
-                } pontos`
+                }, ${
+                  isDouble
+                    ? `ganhando ${(playerValue - dealerValue) * 2} pontos (${
+                        playerValue - dealerValue
+                      } x 2)`
+                    : `ganhando ${playerValue - dealerValue} pontos`
+                }`
               : "Empate"}
           <Button
             onClick={() => {
@@ -243,23 +303,23 @@ export default function PlayerButtonsLogic({
           </Button>
           <Button
             style={{
-              opacity: hitButtonDisabled ? 0.5 : 1,
-              cursor: hitButtonDisabled ? "default" : "pointer",
+              opacity: standButtonDisabled ? 0.5 : 1,
+              cursor: standButtonDisabled ? "default" : "pointer",
             }}
             onClick={() => standLogic()}
-            disabled={hitButtonDisabled}
+            disabled={standButtonDisabled}
           >
             Stand
           </Button>
           <Button
             style={{
-              opacity: hitButtonDisabled ? 0.5 : 1,
-              cursor: hitButtonDisabled ? "default" : "pointer",
+              opacity: doubleButtonDisabled ? 0.5 : 1,
+              cursor: doubleButtonDisabled ? "default" : "pointer",
             }}
-            onClick={() => splitLogic()}
-            disabled={hitButtonDisabled}
+            onClick={() => doubleDownLogic()}
+            disabled={doubleButtonDisabled}
           >
-            Split
+            Double Down
           </Button>
         </>
       )}

@@ -20,8 +20,8 @@ Lógica e Requisitos:
 
     Quando o jogador decide "stand", a pontuação é comparada entre o jogador e o dealer:
         - A pontuação da partida é a diferença de pontos de quem ganhou referente a quem perdeu
-        - Caso um jogador ou o dealer passe de 21 pontos ele perderá a quantidade sobressalente de pontos e uma nova rodada vai começar
-        - Em caso de empate, nenhum ponto é ganho ou perdido
+        - Caso um jogador ou o dealer passe de 21 pontos ele perderá a quantidade sobressalente de pontos e uma nova rodada vai começar.
+        - Em caso de empate, nenhum ponto é ganho ou perdido.
 
 - Escolha do Jogador:
 
@@ -29,6 +29,7 @@ Lógica e Requisitos:
     "hit" (pedir mais uma carta)
     "stand" (ficar com as cartas atuais)
     "split" (dividir as cartas e fazer dois jogos)
+    "double down" (dobrar a pontuação recebendo apenas mais uma carta)
 
 - Jogada do Computador:
 

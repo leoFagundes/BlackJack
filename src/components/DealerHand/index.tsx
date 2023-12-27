@@ -43,7 +43,6 @@ export default function DealerHand({ dealerHand, dealerValue }: Props) {
       ) : (
         <>
           <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
-          <LabelContainer>Mão do Dealer</LabelContainer>
         </>
       )}
       {dealerHand && dealerHand.length == 1 && (

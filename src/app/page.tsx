@@ -11,6 +11,7 @@ import { Button } from "@/components/styledComponents/ButtonStyled";
 import PlayerButtonsLogic from "@/components/PlayerButtonsLogic/PlayerButtonsLogic";
 import "bootstrap/dist/css/bootstrap.min.css";
 import RulesModal from "@/components/Modal/RulesModal/RulesModal";
+import InfoModal from "@/components/Modal/InfoModal/InfoModal";
 
 const TopSideSection = styled.section`
   display: flex;
@@ -57,8 +58,10 @@ export default function Home() {
   const [dealerValue, setDealerValue] = useState<number>(0);
   const [playerScore, setPlayerScore] = useState<number>(0);
   const [dealerScore, setDealerScore] = useState<number>(0);
+  const [isDouble, setIsDouble] = useState(false);
 
   const [showRulesModal, setShowRulesModal] = useState(false);
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   useEffect(() => {
     // Mapeia os valores das cartas considerando KING, QUEEN, etc. como 10
@@ -113,7 +116,11 @@ export default function Home() {
     if (sum > 21) {
       console.log("Estourou! O jogador perdeu!");
       const newScore = 21 - sum;
-      setPlayerScore(playerScore + newScore);
+      if (isDouble) {
+        setPlayerScore(playerScore + newScore * 2);
+      } else {
+        setPlayerScore(playerScore + newScore);
+      }
     }
   }, [playerHand]);
 
@@ -163,10 +170,14 @@ export default function Home() {
   }, [dealerHand]);
 
   return (
-    <main>
+    <main className={isDouble == false ? "main" : "DoubleMain"}>
       <RulesModal
         show={showRulesModal}
         handleClose={() => setShowRulesModal(false)}
+      />
+      <InfoModal
+        show={showInfoModal}
+        handleClose={() => setShowInfoModal(false)}
       />
       <TopSideSection>
         <DealerHand dealerHand={dealerHand} dealerValue={dealerValue} />
@@ -194,6 +205,8 @@ export default function Home() {
             setDealerScore={setDealerScore}
             playerScore={playerScore}
             dealerScore={dealerScore}
+            isDouble={isDouble}
+            setIsDouble={setIsDouble}
           />
         ) : (
           ""
@@ -204,7 +217,9 @@ export default function Home() {
           <Button onClick={() => setShowRulesModal(true)}>
             Regras do Jogo
           </Button>
-          <Button>Valor das Cartas</Button>
+          <Button onClick={() => setShowInfoModal(true)}>
+            Valor das Cartas
+          </Button>
         </div>
         <PlayerHand playerHand={playerHand} playerValue={playerValue} />
         <Score playerScore={playerScore} dealerScore={dealerScore} />
