@@ -101,7 +101,17 @@ export default function Home() {
   useEffect(() => {
     // Salva o deckID no localStorage sempre que ele for atualizado
     localStorage.setItem("deckID", deckID);
-  }, [deckID]);
+  }, [
+    deckID,
+    drawnCards,
+    playerHand,
+    dealerHand,
+    playerValue,
+    dealerValue,
+    playerScore,
+    dealerScore,
+    isDouble,
+  ]);
 
   // Defina um array com os nomes dos estados que você deseja armazenar em cache
   const statesToCache = [

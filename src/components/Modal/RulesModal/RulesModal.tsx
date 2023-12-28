@@ -112,9 +112,9 @@ const RulesModal = ({ show, handleClose }: Props) => {
             <h2>Blackjack</h2>
             <ul>
               <li>
-                Um "blackjack" ocorre quando um jogador recebe um Ás e uma carta
-                de valor 10 (10, valete, dama ou rei) como suas duas primeiras
-                cartas.
+                Um &quot;blackjack&quot; ocorre quando um jogador recebe um Ás e
+                uma carta de valor 10 (10, valete, dama ou rei) como suas duas
+                primeiras cartas.
               </li>
             </ul>
           </div>
@@ -123,12 +123,12 @@ const RulesModal = ({ show, handleClose }: Props) => {
             <h2>Jogada do Jogador</h2>
             <ul>
               <li>
-                Os jogadores têm várias opções, incluindo "hit" (pedir mais uma
-                carta) ou "stand" (manter a mão atual).
+                Os jogadores têm várias opções, incluindo &quot;hit&quot; (pedir
+                mais uma carta) ou &quot;stand&quot; (manter a mão atual).
               </li>
               <li>
-                Além disso, os jogadores podem optar por "double down" (dobrar a
-                aposta inicial, recebendo apenas mais uma carta)
+                Além disso, os jogadores podem optar por &quot;double down&quot;
+                (dobrar a aposta inicial, recebendo apenas mais uma carta)
               </li>
             </ul>
           </div>
@@ -154,7 +154,7 @@ const RulesModal = ({ show, handleClose }: Props) => {
               </li>
               <li>
                 Se a mão do jogador ultrapassar 21, ele perde automaticamente
-                (chamado de "bust").
+                (chamado de &quot;bust&quot;).
               </li>
               <li>
                 Se o dealer ultrapassar 21, todos os jogadores que ainda estão
@@ -176,8 +176,8 @@ const RulesModal = ({ show, handleClose }: Props) => {
           <div>
             <h2>Pontuação</h2>
             <p>
-              Quando o jogador decide "stand", a pontuação é comparada entre o
-              jogador e o dealer:
+              Quando o jogador decide &quot;stand&quot;, a pontuação é comparada
+              entre o jogador e o dealer:
             </p>
             <ul>
               <li>
