@@ -52,47 +52,75 @@ const BottomSideSection = styled.section`
 export default function Home() {
   const [deckID, setDeckID] = useState(() => {
     // Tenta recuperar o deckID do localStorage, caso exista
-    const savedDeckID = localStorage.getItem("deckID");
-    return savedDeckID || "";
+    if (typeof window !== "undefined") {
+      const savedDeckID = localStorage.getItem("deckID");
+      return savedDeckID || "";
+    }
+    return "";
   });
+
   const [drawnCards, setDrawnCards] = useState<string[]>(() => {
-    const savedDrawnCards = localStorage.getItem("drawnCards");
-    return savedDrawnCards ? JSON.parse(savedDrawnCards) : [];
+    if (typeof window !== "undefined") {
+      const savedDrawnCards = localStorage.getItem("drawnCards");
+      return savedDrawnCards ? JSON.parse(savedDrawnCards) : [];
+    }
+    return [];
   });
 
   const [playerHand, setPlayerHand] = useState<Cards[]>(() => {
-    const savedPlayerHand = localStorage.getItem("playerHand");
-    return savedPlayerHand ? JSON.parse(savedPlayerHand) : [];
+    if (typeof window !== "undefined") {
+      const savedPlayerHand = localStorage.getItem("playerHand");
+      return savedPlayerHand ? JSON.parse(savedPlayerHand) : [];
+    }
+    return [];
   });
 
   const [dealerHand, setDealerHand] = useState<Cards[]>(() => {
-    const savedDealerHand = localStorage.getItem("dealerHand");
-    return savedDealerHand ? JSON.parse(savedDealerHand) : [];
+    if (typeof window !== "undefined") {
+      const savedDealerHand = localStorage.getItem("dealerHand");
+      return savedDealerHand ? JSON.parse(savedDealerHand) : [];
+    }
+    return [];
   });
 
   const [playerValue, setPlayerValue] = useState<number>(() => {
-    const savedPlayerValue = localStorage.getItem("playerValue");
-    return savedPlayerValue ? parseInt(savedPlayerValue, 10) : 0;
+    if (typeof window !== "undefined") {
+      const savedPlayerValue = localStorage.getItem("playerValue");
+      return savedPlayerValue ? parseInt(savedPlayerValue, 10) : 0;
+    }
+    return 0;
   });
 
   const [dealerValue, setDealerValue] = useState<number>(() => {
-    const savedDealerValue = localStorage.getItem("dealerValue");
-    return savedDealerValue ? parseInt(savedDealerValue, 10) : 0;
+    if (typeof window !== "undefined") {
+      const savedDealerValue = localStorage.getItem("dealerValue");
+      return savedDealerValue ? parseInt(savedDealerValue, 10) : 0;
+    }
+    return 0;
   });
 
   const [playerScore, setPlayerScore] = useState<number>(() => {
-    const savedPlayerScore = localStorage.getItem("playerScore");
-    return savedPlayerScore ? parseInt(savedPlayerScore, 10) : 0;
+    if (typeof window !== "undefined") {
+      const savedPlayerScore = localStorage.getItem("playerScore");
+      return savedPlayerScore ? parseInt(savedPlayerScore, 10) : 0;
+    }
+    return 0;
   });
 
   const [dealerScore, setDealerScore] = useState<number>(() => {
-    const savedDealerScore = localStorage.getItem("dealerScore");
-    return savedDealerScore ? parseInt(savedDealerScore, 10) : 0;
+    if (typeof window !== "undefined") {
+      const savedDealerScore = localStorage.getItem("dealerScore");
+      return savedDealerScore ? parseInt(savedDealerScore, 10) : 0;
+    }
+    return 0;
   });
 
   const [isDouble, setIsDouble] = useState(() => {
-    const savedIsDouble = localStorage.getItem("isDouble");
-    return savedIsDouble === "true";
+    if (typeof window !== "undefined") {
+      const savedIsDouble = localStorage.getItem("isDouble");
+      return savedIsDouble === "true";
+    }
+    return false;
   });
 
   const [showRulesModal, setShowRulesModal] = useState(false);
