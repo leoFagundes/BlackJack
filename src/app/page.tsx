@@ -12,6 +12,7 @@ import PlayerButtonsLogic from "@/components/PlayerButtonsLogic/PlayerButtonsLog
 import "bootstrap/dist/css/bootstrap.min.css";
 import RulesModal from "@/components/Modal/RulesModal/RulesModal";
 import InfoModal from "@/components/Modal/InfoModal/InfoModal";
+import InitialApresentation from "@/components/InitialApresentation/InitialApresentation";
 
 const TopSideSection = styled.section`
   display: flex;
@@ -50,6 +51,8 @@ const BottomSideSection = styled.section`
 `;
 
 export default function Home() {
+  const [initialApresentation, setInitialApresentation] = useState(true);
+
   const [deckID, setDeckID] = useState(() => {
     // Tenta recuperar o deckID do localStorage, caso exista
     if (typeof window !== "undefined") {
@@ -132,6 +135,7 @@ export default function Home() {
       localStorage.setItem("deckID", deckID);
     }
   }, [
+    initialApresentation,
     deckID,
     drawnCards,
     playerHand,
@@ -145,6 +149,7 @@ export default function Home() {
 
   // Defina um array com os nomes dos estados que você deseja armazenar em cache
   const statesToCache = [
+    { state: initialApresentation, key: "Init" },
     { state: drawnCards, key: "drawnCards" },
     { state: playerHand, key: "playerHand" },
     { state: dealerHand, key: "dealerHand" },
@@ -163,6 +168,7 @@ export default function Home() {
       });
     }
   }, [
+    initialApresentation,
     deckID,
     drawnCards,
     playerHand,
@@ -282,6 +288,11 @@ export default function Home() {
 
   return (
     <main className={isDouble == false ? "main" : "DoubleMain"}>
+      <InitialApresentation
+        deckID={deckID}
+        show={initialApresentation}
+        setInitialApresentation={setInitialApresentation}
+      />
       <RulesModal
         show={showRulesModal}
         handleClose={() => setShowRulesModal(false)}
