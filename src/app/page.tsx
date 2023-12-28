@@ -149,7 +149,6 @@ export default function Home() {
 
   // Defina um array com os nomes dos estados que você deseja armazenar em cache
   const statesToCache = [
-    { state: initialApresentation, key: "Init" },
     { state: drawnCards, key: "drawnCards" },
     { state: playerHand, key: "playerHand" },
     { state: dealerHand, key: "dealerHand" },
@@ -168,7 +167,6 @@ export default function Home() {
       });
     }
   }, [
-    initialApresentation,
     deckID,
     drawnCards,
     playerHand,

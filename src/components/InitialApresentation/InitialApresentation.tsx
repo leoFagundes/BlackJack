@@ -125,7 +125,9 @@ export default function InitialApresentation({
   show,
   setInitialApresentation,
 }: Props) {
-  const localStorageDeckID = localStorage.getItem("deckID");
+  const localStorageDeckID =
+    typeof window !== "undefined" ? localStorage.getItem("deckID") : null;
+
   if (show == true) {
     return (
       <SectionContainer>
@@ -142,15 +144,13 @@ export default function InitialApresentation({
           <span className="textLetter">c</span>
           <span className="textLetter">k</span>
         </div>
-        {localStorageDeckID ? (
+        {localStorageDeckID != null ? (
           <Button onClick={() => setInitialApresentation(false)}>
-            Continuar Jogandoㅤ
-            <ImClubs size={18} />
+            Continuar Jogando <ImClubs size={18} />
           </Button>
         ) : (
           <Button onClick={() => setInitialApresentation(false)}>
-            Iniciar Novo Jogoㅤ
-            <ImClubs size={18} />
+            Iniciar Novo Jogo <ImClubs size={18} />
           </Button>
         )}
       </SectionContainer>
