@@ -100,7 +100,9 @@ export default function Home() {
 
   useEffect(() => {
     // Salva o deckID no localStorage sempre que ele for atualizado
-    localStorage.setItem("deckID", deckID);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("deckID", deckID);
+    }
   }, [
     deckID,
     drawnCards,
@@ -126,11 +128,23 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    // Use o array statesToCache para iterar sobre os estados e atualizar o localStorage
-    statesToCache.forEach(({ state, key }) => {
-      localStorage.setItem(key, JSON.stringify(state));
-    });
-  }, [...statesToCache.map(({ state }) => state)]); // Dependências do useEffect
+    if (typeof window !== "undefined") {
+      // O código dentro deste bloco só será executado no lado do cliente
+      statesToCache.forEach(({ state, key }) => {
+        localStorage.setItem(key, JSON.stringify(state));
+      });
+    }
+  }, [
+    deckID,
+    drawnCards,
+    playerHand,
+    dealerHand,
+    playerValue,
+    dealerValue,
+    playerScore,
+    dealerScore,
+    isDouble,
+  ]);
 
   useEffect(() => {
     // Mapeia os valores das cartas considerando KING, QUEEN, etc. como 10
