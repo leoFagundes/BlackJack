@@ -50,18 +50,77 @@ const BottomSideSection = styled.section`
 `;
 
 export default function Home() {
-  const [deckID, setDeckID] = useState("");
-  const [drawnCards, setDrawnCards] = useState<string[]>([]);
-  const [playerHand, setPlayerHand] = useState<Cards[]>([]);
-  const [dealerHand, setDealerHand] = useState<Cards[]>([]);
-  const [playerValue, setPlayerValue] = useState<number>(0);
-  const [dealerValue, setDealerValue] = useState<number>(0);
-  const [playerScore, setPlayerScore] = useState<number>(0);
-  const [dealerScore, setDealerScore] = useState<number>(0);
-  const [isDouble, setIsDouble] = useState(false);
+  const [deckID, setDeckID] = useState(() => {
+    // Tenta recuperar o deckID do localStorage, caso exista
+    const savedDeckID = localStorage.getItem("deckID");
+    return savedDeckID || "";
+  });
+  const [drawnCards, setDrawnCards] = useState<string[]>(() => {
+    const savedDrawnCards = localStorage.getItem("drawnCards");
+    return savedDrawnCards ? JSON.parse(savedDrawnCards) : [];
+  });
+
+  const [playerHand, setPlayerHand] = useState<Cards[]>(() => {
+    const savedPlayerHand = localStorage.getItem("playerHand");
+    return savedPlayerHand ? JSON.parse(savedPlayerHand) : [];
+  });
+
+  const [dealerHand, setDealerHand] = useState<Cards[]>(() => {
+    const savedDealerHand = localStorage.getItem("dealerHand");
+    return savedDealerHand ? JSON.parse(savedDealerHand) : [];
+  });
+
+  const [playerValue, setPlayerValue] = useState<number>(() => {
+    const savedPlayerValue = localStorage.getItem("playerValue");
+    return savedPlayerValue ? parseInt(savedPlayerValue, 10) : 0;
+  });
+
+  const [dealerValue, setDealerValue] = useState<number>(() => {
+    const savedDealerValue = localStorage.getItem("dealerValue");
+    return savedDealerValue ? parseInt(savedDealerValue, 10) : 0;
+  });
+
+  const [playerScore, setPlayerScore] = useState<number>(() => {
+    const savedPlayerScore = localStorage.getItem("playerScore");
+    return savedPlayerScore ? parseInt(savedPlayerScore, 10) : 0;
+  });
+
+  const [dealerScore, setDealerScore] = useState<number>(() => {
+    const savedDealerScore = localStorage.getItem("dealerScore");
+    return savedDealerScore ? parseInt(savedDealerScore, 10) : 0;
+  });
+
+  const [isDouble, setIsDouble] = useState(() => {
+    const savedIsDouble = localStorage.getItem("isDouble");
+    return savedIsDouble === "true";
+  });
 
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
+
+  useEffect(() => {
+    // Salva o deckID no localStorage sempre que ele for atualizado
+    localStorage.setItem("deckID", deckID);
+  }, [deckID]);
+
+  // Defina um array com os nomes dos estados que você deseja armazenar em cache
+  const statesToCache = [
+    { state: drawnCards, key: "drawnCards" },
+    { state: playerHand, key: "playerHand" },
+    { state: dealerHand, key: "dealerHand" },
+    { state: playerValue, key: "playerValue" },
+    { state: dealerValue, key: "dealerValue" },
+    { state: playerScore, key: "playerScore" },
+    { state: dealerScore, key: "dealerScore" },
+    { state: isDouble, key: "isDouble" },
+  ];
+
+  useEffect(() => {
+    // Use o array statesToCache para iterar sobre os estados e atualizar o localStorage
+    statesToCache.forEach(({ state, key }) => {
+      localStorage.setItem(key, JSON.stringify(state));
+    });
+  }, [...statesToCache.map(({ state }) => state)]); // Dependências do useEffect
 
   useEffect(() => {
     // Mapeia os valores das cartas considerando KING, QUEEN, etc. como 10
@@ -214,10 +273,19 @@ export default function Home() {
       </MidSideSection>
       <BottomSideSection>
         <div className="info">
-          <Button onClick={() => setShowRulesModal(true)}>
+          <Button
+            width="157px"
+            onClick={() => {
+              localStorage.clear();
+              window.location.reload();
+            }}
+          >
+            Reiniciar Jogo
+          </Button>
+          <Button width="157px" onClick={() => setShowRulesModal(true)}>
             Regras do Jogo
           </Button>
-          <Button onClick={() => setShowInfoModal(true)}>
+          <Button width="157px" onClick={() => setShowInfoModal(true)}>
             Valor das Cartas
           </Button>
         </div>
