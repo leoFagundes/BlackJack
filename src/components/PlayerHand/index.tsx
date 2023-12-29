@@ -39,7 +39,7 @@ export default function PlayerHand({ playerHand, playerValue }: Props) {
           </SomaLabel>
           {playerHand.map((props, index) => (
             <StyledDiv key={index} index={index} totalitems={playerHand.length}>
-              <CardImage src={props.image} />
+              <CardImage src={props.image} animation="true" />
             </StyledDiv>
           ))}
           <LabelContainer>Mão do Jogador</LabelContainer>

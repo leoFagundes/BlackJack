@@ -13,6 +13,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import RulesModal from "@/components/Modal/RulesModal/RulesModal";
 import InfoModal from "@/components/Modal/InfoModal/InfoModal";
 import InitialApresentation from "@/components/InitialApresentation/InitialApresentation";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
+import { FaList } from "react-icons/fa";
+import { VscDebugRestart } from "react-icons/vsc";
+import { GiRuleBook } from "react-icons/gi";
+import { ImSpades } from "react-icons/im";
+import { MdOutlineScoreboard } from "react-icons/md";
+import ScoreModal from "@/components/Modal/ScoreModal/ScoreModal";
 
 const TopSideSection = styled.section`
   display: flex;
@@ -47,11 +55,34 @@ const BottomSideSection = styled.section`
     bottom: 5px;
     left: 5px;
     z-index: 2;
+
+    @media screen and (max-width: 600px) {
+      right: 5px;
+      left: auto;
+    }
   }
 `;
 
 export default function Home() {
+  const [showButtons, setShowButtons] = useState(true);
   const [initialApresentation, setInitialApresentation] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowButtons(window.innerWidth >= 600);
+    };
+
+    // Verificar a largura da tela no carregamento inicial
+    handleResize();
+
+    // Adicionar um ouvinte de redimensionamento para atualizar o estado quando a largura da tela mudar
+    window.addEventListener("resize", handleResize);
+
+    // Remover o ouvinte de redimensionamento ao desmontar o componente
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const [deckID, setDeckID] = useState(() => {
     // Tenta recuperar o deckID do localStorage, caso exista
@@ -128,6 +159,7 @@ export default function Home() {
 
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [showScoreModal, setShowScoreModal] = useState(false);
 
   useEffect(() => {
     // Salva o deckID no localStorage sempre que ele for atualizado
@@ -299,17 +331,41 @@ export default function Home() {
         show={showInfoModal}
         handleClose={() => setShowInfoModal(false)}
       />
+      <ScoreModal
+        playerScore={playerScore}
+        dealerScore={dealerScore}
+        show={showScoreModal}
+        handleClose={() => setShowScoreModal(false)}
+      />
       <TopSideSection>
         <DealerHand dealerHand={dealerHand} dealerValue={dealerValue} />
-        <DrawPile
-          deckID={deckID}
-          setDeckID={setDeckID}
-          setDrawnCards={setDrawnCards}
-          setPlayerHand={setPlayerHand}
-          setDealerHand={setDealerHand}
-        />
+
+        {showButtons ? (
+          <DrawPile
+            showButtons={showButtons}
+            deckID={deckID}
+            setDeckID={setDeckID}
+            setDrawnCards={setDrawnCards}
+            setPlayerHand={setPlayerHand}
+            setDealerHand={setDealerHand}
+          />
+        ) : (
+          ""
+        )}
       </TopSideSection>
       <MidSideSection>
+        {showButtons ? (
+          ""
+        ) : (
+          <DrawPile
+            showButtons={showButtons}
+            deckID={deckID}
+            setDeckID={setDeckID}
+            setDrawnCards={setDrawnCards}
+            setPlayerHand={setPlayerHand}
+            setDealerHand={setDealerHand}
+          />
+        )}
         {deckID != "" ? (
           <PlayerButtonsLogic
             deckID={deckID}
@@ -334,21 +390,56 @@ export default function Home() {
       </MidSideSection>
       <BottomSideSection>
         <div className="info">
-          <Button
-            width="157px"
-            onClick={() => {
-              localStorage.clear();
-              window.location.reload();
-            }}
-          >
-            Reiniciar Jogo
-          </Button>
-          <Button width="157px" onClick={() => setShowRulesModal(true)}>
-            Regras do Jogo
-          </Button>
-          <Button width="157px" onClick={() => setShowInfoModal(true)}>
-            Valor das Cartas
-          </Button>
+          {showButtons ? (
+            <>
+              <Button
+                width="180px"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.reload();
+                }}
+              >
+                <VscDebugRestart /> Reiniciar Jogo
+              </Button>
+              <Button width="180px" onClick={() => setShowRulesModal(true)}>
+                <GiRuleBook /> Regras do Jogo
+              </Button>
+              <Button width="180px" onClick={() => setShowInfoModal(true)}>
+                <ImSpades /> Valor das Cartas
+              </Button>
+            </>
+          ) : (
+            <DropdownButton
+              variant="success"
+              title={<FaList />}
+              onSelect={(eventKey) => {
+                if (eventKey === "restart") {
+                  localStorage.clear();
+                  window.location.reload();
+                } else if (eventKey === "rules") {
+                  setShowRulesModal(true);
+                } else if (eventKey === "info") {
+                  setShowInfoModal(true);
+                } else if (eventKey === "score") {
+                  setShowScoreModal(true);
+                }
+              }}
+            >
+              <Dropdown.Item eventKey="restart">
+                <VscDebugRestart /> Reiniciar Jogo
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="rules">
+                <GiRuleBook /> Regras do Jogo
+              </Dropdown.Item>
+              <Dropdown.Item eventKey="info">
+                <ImSpades />
+                Valor das Cartas
+              </Dropdown.Item>
+              <Dropdown.Item eventKey={"score"}>
+                <MdOutlineScoreboard /> Pontuação
+              </Dropdown.Item>
+            </DropdownButton>
+          )}
         </div>
         <PlayerHand playerHand={playerHand} playerValue={playerValue} />
         <Score playerScore={playerScore} dealerScore={dealerScore} />

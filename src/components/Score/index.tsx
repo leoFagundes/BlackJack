@@ -5,13 +5,14 @@ import { styled } from "styled-components";
 interface Props {
   playerScore: number;
   dealerScore: number;
+  position?: "fixed" | "relative";
 }
 
-const ScoreContainer = styled.div`
+const ScoreContainer = styled.div<{ position?: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
+  position: ${(props) => props.position || "fixed"};
   bottom: 5px;
   right: 5px;
   background-color: rgb(3, 117, 81);
@@ -23,6 +24,10 @@ const ScoreContainer = styled.div`
   padding: 10px 20px;
   color: white;
   gap: 15px;
+
+  @media screen and (max-width: 600px) {
+    display: ${(props) => (props.position === "fixed" ? "none" : "flex")};
+  }
 
   & > div {
     display: flex;
@@ -36,9 +41,9 @@ const ScoreContainer = styled.div`
   }
 `;
 
-export default function Score({ playerScore, dealerScore }: Props) {
+export default function Score({ playerScore, dealerScore, position }: Props) {
   return (
-    <ScoreContainer>
+    <ScoreContainer position={position ? position : "fixed"}>
       <h4>Pontuação</h4>
       <div>
         <div title={`O Jogador tem ${playerScore} pontos`}>

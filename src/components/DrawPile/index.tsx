@@ -16,6 +16,7 @@ import { LabelContainer } from "../styledComponents/LabelStyled";
 import { styled } from "styled-components";
 
 interface Props {
+  showButtons: boolean;
   deckID: string;
   setDeckID: React.Dispatch<SetStateAction<string>>;
   setDrawnCards: React.Dispatch<SetStateAction<string[]>>;
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export default function DrawPile({
+  showButtons,
   deckID,
   setDeckID,
   setDrawnCards,
@@ -90,7 +92,7 @@ export default function DrawPile({
 
   return (
     <>
-      {deckID != "" ? (
+      {deckID != "" && showButtons ? (
         <DeckDiv>
           {deckCount == 1 ? (
             <>
@@ -120,11 +122,38 @@ export default function DrawPile({
           )}
         </DeckDiv>
       ) : (
-        <Button onClick={() => fetchNewDeck()}>Criar Baralho</Button>
+        <CreateDeckContainer transform={showButtons ? "translateY(200px)" : ""}>
+          {showButtons ? (
+            <>
+              <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+              <Button onClick={() => fetchNewDeck()}>Iniciar Jogo</Button>
+            </>
+          ) : (
+            <>
+              {deckID != "" ? (
+                ""
+              ) : (
+                <Button onClick={() => fetchNewDeck()}>Iniciar Jogo</Button>
+              )}
+            </>
+          )}
+        </CreateDeckContainer>
       )}
     </>
   );
 }
+
+const CreateDeckContainer = styled.div<{ transform?: string }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  button {
+    position: absolute;
+    transform: ${(props) =>
+      props.transform ? props.transform : "translateY(0)"};
+  }
+`;
 
 const DeckDiv = styled.div`
   display: flex;

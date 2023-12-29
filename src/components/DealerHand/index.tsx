@@ -36,13 +36,16 @@ export default function DealerHand({ dealerHand, dealerValue }: Props) {
           </SomaLabel>
           {dealerHand.map((props, index) => (
             <StyledDiv key={index} index={index} totalitems={dealerHand.length}>
-              <CardImage src={props.image} />
+              <CardImage src={props.image} animation="true" />
             </StyledDiv>
           ))}
         </>
       ) : (
         <>
-          <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+          <CardImage
+            animation="true"
+            src="https://deckofcardsapi.com/static/img/back.png"
+          />
         </>
       )}
       {dealerHand && dealerHand.length == 1 && (

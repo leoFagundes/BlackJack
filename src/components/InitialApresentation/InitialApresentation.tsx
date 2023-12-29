@@ -21,11 +21,10 @@ const SectionContainer = styled.section`
   width: 100vw;
   background-color: white;
   z-index: 10;
-  min-height: 600px;
 
   img {
     position: absolute;
-    height: 400px;
+    height: 350px;
     background-size: cover;
     animation: imgAnimation 0.8s ease-in-out;
   }
@@ -37,7 +36,24 @@ const SectionContainer = styled.section`
 
   & > button {
     position: absolute;
-    transform: translateY(300px);
+    transform: translateY(280px);
+  }
+
+  @media screen and (max-height: 700px) {
+    img {
+      position: relative;
+      height: 250px;
+    }
+
+    & > div {
+      position: relative;
+      transform: translateY(0);
+    }
+
+    & > button {
+      position: relative;
+      transform: translateY(0);
+    }
   }
 
   .textLetter {
