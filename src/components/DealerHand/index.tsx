@@ -21,6 +21,7 @@ const DealerHandContainer = styled.div`
   @media screen and (max-width: 400px) {
     max-width: 280px;
     overflow: scroll;
+    border-radius: 15px;
   }
 `;
 
