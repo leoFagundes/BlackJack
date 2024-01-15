@@ -18,6 +18,12 @@ interface StyledDivProps {
 const PlayerHandContainer = styled.div`
   display: flex;
   overflow: hidden;
+
+  @media screen and (max-width: 400px) {
+    max-width: 280px;
+    overflow: scroll;
+    border-radius: 15px;
+  }
 `;
 
 const StyledDiv = styled.div<StyledDivProps>`
@@ -27,6 +33,10 @@ const StyledDiv = styled.div<StyledDivProps>`
   box-sizing: border-box; /* Inclui padding e bordas na largura */
   transform: ${(props) => `translateX(${props.index * -60}px)`};
   transition: transform 0.3s ease-in-out;
+
+  @media screen and (max-width: 400px) {
+    transform: none;
+  }
 `;
 
 export default function PlayerHand({ playerHand, playerValue }: Props) {
