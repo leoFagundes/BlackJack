@@ -48,6 +48,9 @@ export default function DealerHand({ dealerHand, dealerValue }: Props) {
           {dealerHand.map((props, index) => (
             <StyledDiv key={index} index={index} totalitems={dealerHand.length}>
               <CardImage src={props.image} animation="true" />
+              {dealerHand && dealerHand.length == 1 && (
+                <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
+              )}
             </StyledDiv>
           ))}
         </>
@@ -59,11 +62,11 @@ export default function DealerHand({ dealerHand, dealerValue }: Props) {
           />
         </>
       )}
-      {dealerHand && dealerHand.length == 1 && (
+      {/* {dealerHand && dealerHand.length == 1 && (
         <StyledDiv index={1} totalitems={2}>
           <CardImage src="https://deckofcardsapi.com/static/img/back.png" />
         </StyledDiv>
-      )}
+      )} */}
       <LabelContainer>Mão do Dealer</LabelContainer>
     </DealerHandContainer>
   );

@@ -261,25 +261,19 @@ export default function PlayerButtonsLogic({
       ) : HandleNewGame ? (
         <MidContainer>
           {dealerValue > playerValue
-            ? `Dealer venceu com uma diferença de ${
-                dealerValue - playerValue
-              }, ${
-                isDouble
-                  ? `ganhando ${(dealerValue - playerValue) * 2} pontos (${
-                      dealerValue - playerValue
-                    } x 2)`
-                  : `ganhando ${dealerValue - playerValue} pontos`
-              }`
+            ? `Dealer venceu com uma diferença de ${dealerValue - playerValue
+            }, ${isDouble
+              ? `ganhando ${(dealerValue - playerValue) * 2} pontos (${dealerValue - playerValue
+              } x 2)`
+              : `ganhando ${dealerValue - playerValue} pontos`
+            }`
             : playerValue > dealerValue
-              ? `Você venceu com uma diferença de ${
-                  playerValue - dealerValue
-                }, ${
-                  isDouble
-                    ? `ganhando ${(playerValue - dealerValue) * 2} pontos (${
-                        playerValue - dealerValue
-                      } x 2)`
-                    : `ganhando ${playerValue - dealerValue} pontos`
-                }`
+              ? `Você venceu com uma diferença de ${playerValue - dealerValue
+              }, ${isDouble
+                ? `ganhando ${(playerValue - dealerValue) * 2} pontos (${playerValue - dealerValue
+                } x 2)`
+                : `ganhando ${playerValue - dealerValue} pontos`
+              }`
               : "Empate"}
           <Button
             onClick={() => {
@@ -334,4 +328,5 @@ const MidContainer = styled.div`
   align-items: center;
   color: white;
   gap: 10px;
+  text-align: center;
 `;
